@@ -1,0 +1,63 @@
+################################################################################
+#| COPY NUMBER ALTERATION ANALYSIS - CONTROL-FREEC - AC-82_WESmouse
+################################################################################
+#| Last update: 22/10/2026
+#| Author: Ivana Rondon Lorefice
+#|
+#| Description:
+#| This configuration file defines the parameters for detecting copy number
+#| alterations (CNAs) in WES mouse samples using Control-FREEC.
+#|
+#| Main settings:
+#|   - Mouse reference genome, mappability, and target exome regions.
+#|   - Tumor and matched normal BAM files.
+#|   - Read count normalization and CNA segmentation parameters.
+#|   - Tumor purity and ploidy estimation settings.
+#|   - Output directory and computational resources.
+#|
+#| Notes:
+#|   - Uses a matched normal sample as a reference.
+#|   - Analysis is restricted to targeted exome regions.
+################################################################################
+
+[general]
+# --- Genome / resources ---
+chrLenFile=/vols/GPArkaitz_bigdata/DATA_shared/Genomes_Rocky/Sequences/mm10.mainchrom.fai
+chrFiles=/vols/GPArkaitz_bigdata/DATA_shared/Genomes_Rocky/chromosomes/mm10/
+gemMappabilityFile=/vols/GPArkaitz_bigdata/DATA_shared/Genomes_Rocky/mappability/GEM_mapp_GRCm38_68_mm10.gem  
+outputDir=/vols/GPArkaitz_bigdata/irondon/AC-82_WESmouse_pipeline/05_CNAs_CONTROL_FREEC_MP/Results/
+
+# --- WES-specific settings ---
+window=0
+sex=XY                   
+
+# --- Purity/ploidy estimation knobs ---
+ploidy=2,3      
+maxThreads=6
+noisyData=TRUE
+minCNAlength=3
+minMappabilityPerWindow=0.85
+readCountThreshold=50
+degree=1
+breakPointType=4
+breakPointThreshold=1.2
+forceGCcontentNormalization=1
+printNA= FALSE
+
+[sample]
+mateFile= /vols/GPArkaitz_bigdata/irondon/AC-82_WESmouse_pipeline/02_Mapping/02_Mapped_Sequences/J993_mapped.rg.sorted.dup.bqsr.bam
+inputFormat= BAM
+mateOrientation= FR
+
+[control]
+mateFile= /vols/GPArkaitz_bigdata/irondon/AC-82_WESmouse_pipeline/02_Mapping/02_Mapped_Sequences/B844_mapped.rg.sorted.dup.bqsr.bam
+inputFormat= BAM
+mateOrientation= FR
+#miniPileup =  /vols/GPArkaitz_bigdata/irondon/AC-82_WESmouse_pipeline/05_CNAs_CONTROL_FREEC_MP/myPileup.pileup.gz
+
+[BAF]
+#fastaFile = /vols/GPArkaitz_bigdata/DATA_shared/Genomes_Rocky/Sequences/Mus_musculus.GRCm38.dna.primary_assembly.fa
+#minimalCoveragePerPosition = 10
+
+[target]
+captureRegions= /vols/GPArkaitz_bigdata/DATA_shared/Genomes_Rocky/WES_data/mm10/Twist_Mouse_Exome_Chr_Modified_for_CODEX2.bed

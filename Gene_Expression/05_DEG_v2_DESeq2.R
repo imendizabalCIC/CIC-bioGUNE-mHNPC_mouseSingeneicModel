@@ -16,7 +16,6 @@ project <- "project"
 
 # Pathway to the folders and files
 # Select one option depending if you are running the script in Rocky or local
-# path <- "/vols/GPArkaitz_bigdata/mponce/"
 path <- "path"
 
 analysis_ID <- "analysis_ID"
